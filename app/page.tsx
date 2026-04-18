@@ -1,22 +1,81 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Sun, MapPin, Zap, Cloud, Wind, Thermometer, ShieldCheck, Activity
+  Sun, MapPin, Zap, Cloud, Wind, Thermometer, ShieldCheck, Activity 
 } from "lucide-react";
 
 import { EnergyChart } from "@/components/EnergyChart";
 import { SolarCompass } from "@/components/SolarCompass";
 import { DayCurveChart } from "@/components/DayCurveChart";
 
+// Função auxiliar para renderizar os ícones com cores dinâmicas e sutis
+const renderFactorIcon = (IconComponent: React.ElementType, color: string, bgColor: string, borderColor: string) => (
+  <div className={`w-14 h-14 ${bgColor} ${borderColor} rounded-2xl flex items-center justify-center ${color} border shadow-sm shrink-0 transition-all`}>
+    <IconComponent size={30} strokeWidth={2.5} />
+  </div>
+);
+
 export default function SunflowerDashboard() {
+  const [currentDateTime, setCurrentDateTime] = useState("");
+
+  useEffect(() => {
+    const updateDateTime = () => {
+      const agora = new Date();
+      const formatada = new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit', month: 'short', year: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      }).format(agora);
+      setCurrentDateTime(formatada.replace(" de ", ". ").replace(",", " ·"));
+    };
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Definição dos fatores com cores coordenadas (Ícone, Fundo, Borda, Barra)
+  const fatores = [
+    { 
+      name: "Irradiação global", val: "Alta", icon: Sun, 
+      color: "text-sun-green-600", bgColor: "bg-green-100/50", borderColor: "border-green-200", 
+      barBg: "bg-green-100", barFill: "bg-sun-green-600", width: "w-[90%]" 
+    },
+    { 
+      name: "Nebulosidade", val: "Baixa", icon: Cloud, 
+      color: "text-blue-600", bgColor: "bg-blue-100/50", borderColor: "border-blue-200", 
+      barBg: "bg-blue-100", barFill: "bg-blue-600", width: "w-[15%]" 
+    },
+    { 
+      name: "Sombreamento", val: "Mínimo", icon: ShieldCheck, 
+      color: "text-emerald-600", bgColor: "bg-emerald-100/50", borderColor: "border-emerald-200", 
+      barBg: "bg-emerald-100", barFill: "bg-emerald-600", width: "w-[8%]" 
+    },
+    { 
+      name: "Temperatura", val: "32°C", icon: Thermometer, 
+      color: "text-orange-600", bgColor: "bg-orange-100/50", borderColor: "border-orange-200", 
+      barBg: "bg-orange-100", barFill: "bg-orange-600", width: "w-[72%]" 
+    },
+    { 
+      name: "Vento", val: "12 km/h", icon: Wind, 
+      color: "text-teal-600", bgColor: "bg-teal-100/50", borderColor: "border-teal-200", 
+      barBg: "bg-teal-100", barFill: "bg-teal-600", width: "w-[30%]" 
+    },
+    { 
+      name: "ROI estimado", val: "4.2 anos", icon: Activity, 
+      color: "text-indigo-600", bgColor: "bg-indigo-100/50", borderColor: "border-indigo-200", 
+      barBg: "bg-indigo-100", barFill: "bg-indigo-600", width: "w-[85%]" 
+    },
+  ];
+
   return (
     <main className="w-full p-4 md:p-6 lg:p-8 space-y-5 bg-[#eeede8] min-h-screen text-sun-text font-sans">
       
-      {/* ── Topbar (REFINADO) ── */}
+      {/* ── Topbar ── */}
       <header className="flex flex-col md:flex-row md:items-center justify-between border-b border-black/10 pb-5 gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-14 h-14 bg-sun-green-600 rounded-full flex items-center justify-center text-sun-amber-400 shrink-0 shadow-sm border border-black/5">
-            <Sun size={32} fill="currentColor" />
+          <div className="w-16 h-16 bg-sun-green-600 rounded-full flex items-center justify-center text-sun-amber-400 shrink-0 shadow-md border border-black/5">
+            <Sun size={40} fill="currentColor" />
           </div>
           <div>
             <h1 className="text-2xl font-black tracking-tight leading-none mb-1.5">Sunflower</h1>
@@ -27,32 +86,25 @@ export default function SunflowerDashboard() {
         </div>
         
         <div className="flex items-center gap-3">
-          {/* Status Badge */}
           <div className="flex items-center gap-2.5 bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm">
             <div className="w-2.5 h-2.5 bg-sun-green-context rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-            <span className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-text">
-              Coletando dados
-            </span>
+            <span className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-text">Coletando dados</span>
           </div>
-          
-          {/* Date Badge */}
-          <div className="bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm">
-            <span className="text-[11px] font-black text-sun-text/80 tracking-wide">
-              17 de abr. de 2026 <span className="text-sun-green-context mx-1.5 font-black">|</span> 22:23
-            </span>
+          <div className="bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm min-w-50 text-center">
+            <span className="text-[11px] font-black text-sun-text/80 tracking-wide uppercase">{currentDateTime || "Sincronizando..."}</span>
           </div>
         </div>
       </header>
 
       {/* ── Location Bar ── */}
       <div className="flex items-center gap-2 bg-white px-4 py-3.5 rounded-lg border border-black/10 shadow-sm">
-        <MapPin size={20} className="text-sun-green-600" />
+        <MapPin size={22} className="text-sun-green-600" />
         <span className="font-black text-sun-text text-base">Belo Jardim, PE, Brasil</span>
         <span className="text-black/10 mx-2 font-black">|</span> 
-        <span className="font-black text-sun-green-context text-sm tracking-tight">
+        <span className="font-black text-[#15803d] text-sm tracking-tight">
           lat -8.33° <span className="text-black/10 mx-1.5">·</span> lon -36.42° <span className="text-black/10 mx-1.5">·</span> alt 768 m
         </span>
-        <span className="ml-auto bg-sun-green-50 text-sun-green-600 px-4 py-1.5 rounded-full font-black text-[11px] uppercase tracking-wider border border-sun-green-100">
+        <span className="ml-auto bg-green-100 text-[#15803d] px-4 py-1.5 rounded-full font-black text-[11px] uppercase tracking-wider border border-green-200">
           Semiárido nordestino
         </span>
       </div>
@@ -60,8 +112,8 @@ export default function SunflowerDashboard() {
       {/* ── Verdict Card ── */}
       <Card className="border-black/10 shadow-md rounded-xl overflow-hidden bg-white">
         <CardContent className="p-8 flex flex-col md:flex-row items-center gap-10">
-          <div className="w-20 h-20 bg-sun-amber-600 rounded-full flex items-center justify-center text-sun-amber-400 shrink-0 shadow-inner">
-             <Sun size={40} fill="currentColor" />
+          <div className="w-24 h-24 bg-sun-green-600 rounded-full flex items-center justify-center text-sun-amber-400 shrink-0 shadow-lg">
+             <Zap size={56} fill="currentColor" />
           </div>
           <div className="flex-1 space-y-3 text-center md:text-left">
             <h2 className="text-2xl font-black text-sun-text">Ótimo para instalação solar!</h2>
@@ -69,17 +121,17 @@ export default function SunflowerDashboard() {
               Esta região apresenta alta irradiação, baixa nebulosidade e ângulos favoráveis. A instalação de painéis definitivos tem alto retorno potencial no Agreste.
             </p>
           </div>
-          <div className="flex flex-col items-end shrink-0 bg-sun-green-50/50 p-6 rounded-2xl border border-sun-green-100/50">
-            <span className="text-6xl font-black text-sun-green-600 leading-none tracking-tighter">84</span>
+          <div className="flex flex-col items-end shrink-0 bg-green-50/50 p-6 rounded-2xl border border-green-100/50">
+            <span className="text-6xl font-black text-[#15803d] leading-none tracking-tighter">84</span>
             <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#6b6a64] mt-3">viabilidade / 100</span>
-            <div className="w-40 h-2.5 mt-3 bg-[#eeede8] rounded-full overflow-hidden shadow-inner">
-              <div className="bg-sun-green-400 h-full w-[84%]" />
+            <div className="w-40 h-2.5 mt-3 bg-white rounded-full overflow-hidden shadow-inner border border-black/5">
+              <div className="bg-[#15803d] h-full w-[84%]" />
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* ── KPI Grid (RESTAURADA E DESTACADA) ── */}
+      {/* ── KPI Grid ── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           { label: "Energia captada hoje", val: "6.4", unit: "kWh / m²", delta: "+12% vs. média local" },
@@ -90,21 +142,18 @@ export default function SunflowerDashboard() {
           <div key={i} className="bg-white border border-black/5 p-5 rounded-xl shadow-sm flex flex-col justify-center">
             <p className="text-[11px] font-bold uppercase tracking-widest text-[#6b6a64] mb-1">{kpi.label}</p>
             <h3 className="text-3xl font-black text-sun-text">{kpi.val}</h3>
-            {/* Unidades em verde vibrante e badges */}
-            <p className="text-[14px] font-extrabold text-sun-green-context mt-1 mb-2">{kpi.unit}</p>
-            <p className="text-[11px] font-bold text-sun-green-600 bg-sun-green-50 self-start px-2 py-0.5 rounded-md border border-sun-green-100/50">{kpi.delta}</p>
+            <p className="text-[14px] font-extrabold text-[#15803d] mt-1 mb-2">{kpi.unit}</p>
+            <p className="text-[11px] font-bold text-[#15803d] bg-green-100/50 self-start px-2 py-0.5 rounded-md border border-green-200/50">{kpi.delta}</p>
           </div>
         ))}
       </div>
 
-      {/* ── Main Grid (Bar Chart & Compass) ── */}
+      {/* ── Main Charts Grid ── */}
       <div className="grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-5">
         <Card className="border-black/5 shadow-sm rounded-xl bg-white">
           <CardContent className="p-6 md:p-8">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-[12px] uppercase font-black text-sun-text tracking-[0.2em]">
-                Produção de Energia
-              </h3>
+              <h3 className="text-[12px] uppercase font-black text-sun-text tracking-[0.2em]">Produção de Energia</h3>
               <div className="flex gap-1 border border-black/5 rounded-full p-1 bg-[#eeede8]/50">
                 {["Hoje", "Semana", "Mês", "Ano"].map((label, idx) => (
                   <button key={label} className={`text-[11px] px-5 py-2 rounded-full font-black transition-all uppercase tracking-wider ${idx === 0 ? 'bg-sun-green-600 text-white shadow-md' : 'text-[#6b6a64] hover:bg-black/5'}`}>
@@ -119,47 +168,34 @@ export default function SunflowerDashboard() {
 
         <Card className="border-black/5 shadow-sm rounded-xl bg-white">
           <CardContent className="p-6 md:p-8 flex flex-col items-center">
-            <h3 className="text-[12px] uppercase font-black text-sun-text tracking-[0.2em] mb-6 self-start">
-              Posição da Placa Solar
-            </h3>
+            <h3 className="text-[12px] uppercase font-black text-sun-text tracking-[0.2em] mb-6 self-start">Posição da Placa Solar</h3>
             <SolarCompass azimuth={214} polar={38} />
           </CardContent>
         </Card>
       </div>
 
-      {/* ── Fatores (6 Cards) RESTAURADOS ── */}
+      {/* ── Fatores de Viabilidade (Com Cores Coordenadas) ── */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-        {[
-          { name: "Irradiação global", val: "Alta", icon: <Sun size={14}/>, color: "text-sun-green-600", bg: "bg-sun-green-50", fill: "w-[90%] bg-sun-green-400" },
-          { name: "Nebulosidade", val: "Baixa", icon: <Cloud size={14}/>, color: "text-blue-600", bg: "bg-blue-50", fill: "w-[15%] bg-blue-500" },
-          { name: "Sombreamento", val: "Mínimo", icon: <ShieldCheck size={14}/>, color: "text-sun-green-600", bg: "bg-sun-green-50", fill: "w-[8%] bg-sun-green-400" },
-          { name: "Temperatura", val: "32°C", icon: <Thermometer size={14}/>, color: "text-sun-amber-600", bg: "bg-sun-amber-50", fill: "w-[72%] bg-sun-amber-400" },
-          { name: "Vento", val: "12 km/h", icon: <Wind size={14}/>, color: "text-sun-green-600", bg: "bg-sun-green-50", fill: "w-[30%] bg-sun-green-400" },
-          { name: "ROI estimado", val: "4.2 anos", icon: <Activity size={14}/>, color: "text-sun-green-600", bg: "bg-sun-green-50", fill: "w-[85%] bg-sun-green-400" },
-        ].map((f, i) => (
-          <div key={i} className="bg-white border border-black/5 p-4 rounded-xl shadow-sm">
-            <div className={`w-8 h-8 rounded-md flex items-center justify-center mb-3 ${f.bg} ${f.color}`}>
-              {f.icon}
-            </div>
-            <p className="text-[11px] uppercase font-black tracking-widest text-[#6b6a64] mb-1">{f.name}</p>
-            <p className={`text-xl font-black mb-2 ${f.color}`}>{f.val}</p>
-            <div className="h-1.5 bg-[#eeede8] rounded-full overflow-hidden">
-              <div className={`h-full ${f.fill}`} />
+        {fatores.map((f, i) => (
+          <div key={i} className="bg-white border border-black/5 p-4 rounded-xl shadow-sm flex items-center gap-5">
+            {renderFactorIcon(f.icon, f.color, f.bgColor, f.borderColor)}
+            <div className="flex-1">
+              <p className="text-[11px] uppercase font-black tracking-widest text-[#6b6a64] mb-0.5">{f.name}</p>
+              <p className={`text-xl font-black mb-2 ${f.color}`}>{f.val}</p>
+              <div className={`h-1.5 ${f.barBg} rounded-full overflow-hidden`}>
+                <div className={`h-full ${f.barFill} ${f.width}`} />
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* ── Curva do Dia ── */}
+      {/* ── Curva de Irradiação ── */}
       <Card className="border-black/5 shadow-sm rounded-xl bg-white">
         <CardContent className="p-6 md:p-8">
           <div className="flex justify-between items-center mb-8">
-            <h3 className="text-[12px] uppercase font-black text-sun-text tracking-[0.2em]">
-              Irradiação ao longo do dia (W/m²)
-            </h3>
-            <span className="text-[11px] font-black uppercase tracking-widest text-sun-green-context bg-sun-green-50 px-4 py-1.5 rounded-full border border-sun-green-100">
-              Curva de captação — hoje
-            </span>
+            <h3 className="text-[12px] uppercase font-black text-sun-text tracking-[0.2em]">Irradiação ao longo do dia (W/m²)</h3>
+            <span className="text-[11px] font-black uppercase tracking-widest text-[#15803d] bg-green-50 px-4 py-1.5 rounded-full border border-green-200">Curva de captação — hoje</span>
           </div>
           <DayCurveChart />
         </CardContent>

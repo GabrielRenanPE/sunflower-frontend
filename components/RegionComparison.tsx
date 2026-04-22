@@ -228,7 +228,7 @@ export function RegionComparison({ region1, region2 }: RegionComparisonProps) {
       </Card>
 
       {/* Recomendação */}
-      <Card className="border-black/10 shadow-md rounded-xl bg-gradient-to-r from-green-50 to-emerald-50">
+      <Card className="border-black/10 shadow-md rounded-xl bg-linear-to-r from-green-50 to-emerald-50">
         <CardContent className="p-6">
           <h3 className="text-lg font-black text-sun-text mb-2">Recomendação</h3>
           <p className="text-[#4a4944] font-bold">

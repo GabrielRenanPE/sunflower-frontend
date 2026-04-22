@@ -149,7 +149,7 @@ export default function SimuladorDashboard() {
           <div className="col-span-1 lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Card Economia Anual */}
-            <Card className="border-white/60 bg-gradient-to-br from-emerald-50/90 to-teal-100/50 backdrop-blur-md shadow-lg shadow-emerald-900/5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-900/10">
+            <Card className="border-white/60 bg-linear-to-br from-emerald-50/90 to-teal-100/50 backdrop-blur-md shadow-lg shadow-emerald-900/5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-900/10">
               <CardContent className="p-8 flex flex-col justify-center h-full relative overflow-hidden">
                 <div className="absolute -right-6 -top-6 text-emerald-500/10 rotate-12 pointer-events-none">
                   <PiggyBank size={140} strokeWidth={1} />
@@ -160,7 +160,7 @@ export default function SimuladorDashboard() {
                   </div>
                   <h3 className="text-sm font-black uppercase tracking-widest text-emerald-900">Economia no 1º Ano</h3>
                 </div>
-                <p className="text-4xl xl:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-700 to-teal-500 relative z-10">
+                <p className="text-4xl xl:text-5xl font-black bg-clip-text text-transparent bg-linear-to-r from-emerald-700 to-teal-500 relative z-10">
                   R$ {economiaAnual.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 bg-white/60 px-3 py-1.5 rounded-lg text-xs font-bold text-emerald-700 w-fit relative z-10">
@@ -171,7 +171,7 @@ export default function SimuladorDashboard() {
             </Card>
 
             {/* Card Tempo de Payback */}
-            <Card className="border-white/60 bg-gradient-to-br from-blue-50/90 to-indigo-100/50 backdrop-blur-md shadow-lg shadow-blue-900/5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/10">
+            <Card className="border-white/60 bg-linear-to-br from-blue-50/90 to-indigo-100/50 backdrop-blur-md shadow-lg shadow-blue-900/5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/10">
               <CardContent className="p-8 flex flex-col justify-center h-full relative overflow-hidden">
                 <div className="absolute -right-6 -top-6 text-blue-500/10 -rotate-12 pointer-events-none">
                   <Clock size={140} strokeWidth={1} />
@@ -182,7 +182,7 @@ export default function SimuladorDashboard() {
                   </div>
                   <h3 className="text-sm font-black uppercase tracking-widest text-blue-900">Tempo de Payback</h3>
                 </div>
-                <p className="text-4xl xl:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-500 relative z-10">
+                <p className="text-4xl xl:text-5xl font-black bg-clip-text text-transparent bg-linear-to-r from-blue-700 to-indigo-500 relative z-10">
                   {paybackAnos}<span className="text-2xl"> {paybackAnos === 1 ? 'ano' : 'anos'}</span> {paybackMesesRestantes > 0 && <span className="text-2xl">e {paybackMesesRestantes} {paybackMesesRestantes === 1 ? 'mês' : 'meses'}</span>}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 bg-white/60 px-3 py-1.5 rounded-lg text-xs font-bold text-blue-700 w-fit relative z-10">
@@ -204,7 +204,7 @@ export default function SimuladorDashboard() {
                     <h3 className="text-sm font-black uppercase tracking-widest text-indigo-900">Lucro (20 Anos)</h3>
                   </div>
                   {/* Removido o break-words, adicionado whitespace-nowrap e fonte ajustada */}
-                  <p className="text-4xl lg:text-[2.5rem] font-black tracking-tighter whitespace-nowrap bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600">
+                  <p className="text-4xl lg:text-[2.5rem] font-black tracking-tighter whitespace-nowrap bg-clip-text text-transparent bg-linear-to-r from-indigo-700 to-purple-600">
                     R$ {lucroLiquido20Anos.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
                   </p>
                   <p className="text-sm font-medium text-slate-500 mt-4 leading-relaxed pr-4">
@@ -229,7 +229,7 @@ export default function SimuladorDashboard() {
                       return (
                         <div key={i} className="relative flex-1 flex flex-col justify-end h-full group">
                           <div 
-                            className={`w-full rounded-t-sm transition-all duration-500 ease-out cursor-pointer hover:opacity-100 opacity-80 ${isLucro ? 'bg-gradient-to-t from-indigo-600 to-indigo-400 hover:from-purple-600 hover:to-indigo-500' : 'bg-gradient-to-t from-orange-400 to-red-400'}`}
+                            className={`w-full rounded-t-sm transition-all duration-500 ease-out cursor-pointer hover:opacity-100 opacity-80 ${isLucro ? 'bg-linear-to-t from-indigo-600 to-indigo-400 hover:from-purple-600 hover:to-indigo-500' : 'bg-linear-to-t from-orange-400 to-red-400'}`}
                             style={{ height: `${heightPct}%`, minHeight: isLucro ? '4px' : '0px' }}
                           />
                           

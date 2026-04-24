@@ -4,8 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Sun, MapPin, Zap, Cloud, Wind, Thermometer, ShieldCheck, Activity, Calculator 
+  Sun, MapPin, Zap, Cloud, Wind, Thermometer, ShieldCheck, Activity, Calculator, FileText 
 } from "lucide-react";
+
 import { EnergyChart } from "@/components/EnergyChart";
 import { DayCurveChart } from "@/components/DayCurveChart";
 import { AngularPerformancePanel } from "@/components/AngularPerformancePanel"; 
@@ -84,16 +85,33 @@ export default function SunflowerDashboard() {
           </div>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center flex-wrap gap-3">
+          
+          {/* Botão Gerar Dossiê PDF */}
+          <Link href="/relatorio" target="_blank" className="flex items-center gap-2 bg-sun-text hover:bg-black text-white px-5 py-2.5 rounded-full shadow-sm transition-colors">
+            <FileText size={16} />
+            <span className="text-[11px] font-black uppercase tracking-[0.15em]">Gerar Dossiê PDF</span>
+          </Link>
+
+          {/* Botão do Simulador ROI */}
+          <Link href="/simulador" className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-full shadow-sm transition-colors">
+            <Calculator size={16} />
+            <span className="text-[11px] font-black uppercase tracking-[0.15em]">Simulador ROI</span>
+          </Link>
+
+          {/* Botão Central de Regiões */}
           <Link href="/regions" className="flex items-center gap-2.5 bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm hover:bg-gray-50 transition-colors">
             <MapPin size={16} className="text-sun-green-600" />
             <span className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-text">Central de Regiões</span>
           </Link>
+          
+          {/* Status Badge */}
           <div className="flex items-center gap-2.5 bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm">
             <div className="w-2.5 h-2.5 bg-sun-green-context rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
             <span className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-text">Coletando dados</span>
           </div>
           
+          {/* Relógio Real-time */}
           <div className="bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm min-w-50 text-center">
             <span className="text-[11px] font-black text-sun-text/80 tracking-wide uppercase">{currentDateTime || "Sincronizando..."}</span>
           </div>
@@ -170,7 +188,7 @@ export default function SunflowerDashboard() {
           </CardContent>
         </Card>
 
-        {/* Novo Painel de Auditoria Angular ocupando o lugar da bússola */}
+        {/* Painel de Auditoria Angular ocupando o lugar da bússola */}
         <AngularPerformancePanel />
       </div>
 

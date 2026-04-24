@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Search, SlidersHorizontal, X } from "lucide-react";
 import { SessionsList, type Session } from "@/components/SessionsList";
@@ -104,9 +105,9 @@ export default function RegionsDashboard() {
             </p>
           </div>
         </div>
-        <a href="/" className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-green-600 hover:text-sun-green-700">
+        <Link href="/" className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-green-600 hover:text-sun-green-700">
           ← Voltar ao Dashboard
-        </a>
+        </Link>
       </header>
 
       {/* Seção de Filtros e Busca */}

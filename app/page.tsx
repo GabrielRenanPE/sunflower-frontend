@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent } from "@/components/ui/card";
 import { 
-  Sun, MapPin, Zap, Cloud, Wind, Thermometer, ShieldCheck, Activity 
+  Sun, MapPin, Zap, Cloud, Wind, Thermometer, ShieldCheck, Activity, Calculator 
 } from "lucide-react";
 import { EnergyChart } from "@/components/EnergyChart";
 import { DayCurveChart } from "@/components/DayCurveChart";
@@ -93,6 +93,7 @@ export default function SunflowerDashboard() {
             <div className="w-2.5 h-2.5 bg-sun-green-context rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
             <span className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-text">Coletando dados</span>
           </div>
+          
           <div className="bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm min-w-50 text-center">
             <span className="text-[11px] font-black text-sun-text/80 tracking-wide uppercase">{currentDateTime || "Sincronizando..."}</span>
           </div>

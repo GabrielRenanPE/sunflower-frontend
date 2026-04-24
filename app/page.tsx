@@ -88,20 +88,30 @@ export default function SunflowerDashboard() {
         <div className="flex items-center flex-wrap gap-3">
           
           {/* Botão Gerar Dossiê PDF */}
-          <Link href="/relatorio" target="_blank" className="flex items-center gap-2 bg-sun-text hover:bg-black text-white px-5 py-2.5 rounded-full shadow-sm transition-colors">
-            <FileText size={16} />
+            <Link 
+            href="/relatorio" 
+            target="_blank" 
+            className="group relative flex items-center gap-2 bg-sun-text hover:bg-black text-white px-5 py-2.5 rounded-full shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/20 hover:ring-2 hover:ring-offset-2 hover:ring-sun-text/60 active:scale-95 active:translate-y-0"
+          >
+            <FileText size={16} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:text-sun-amber-400" />
             <span className="text-[11px] font-black uppercase tracking-[0.15em]">Gerar Dossiê PDF</span>
           </Link>
 
           {/* Botão do Simulador ROI */}
-          <Link href="/simulador" className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-full shadow-sm transition-colors">
-            <Calculator size={16} />
+          <Link 
+            href="/simulador/economia" 
+            className="group relative flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-full shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-900/20 hover:ring-2 hover:ring-offset-2 hover:ring-indigo-600/60 active:scale-95 active:translate-y-0"
+          >
+            <Calculator size={16} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:text-sun-amber-400" />
             <span className="text-[11px] font-black uppercase tracking-[0.15em]">Simulador ROI</span>
           </Link>
 
           {/* Botão Central de Regiões */}
-          <Link href="/regions" className="flex items-center gap-2.5 bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm hover:bg-gray-50 transition-colors">
-            <MapPin size={16} className="text-sun-green-600" />
+          <Link 
+            href="/regions" 
+            className="group relative flex items-center gap-2.5 bg-white border border-black/10 px-5 py-2.5 rounded-full shadow-sm hover:bg-gray-50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5 hover:ring-2 hover:ring-offset-2 hover:ring-slate-200 active:scale-95 active:translate-y-0"
+          >
+            <MapPin size={16} className="text-sun-green-600 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:text-sun-amber-500" />
             <span className="text-[11px] font-black uppercase tracking-[0.15em] text-sun-text">Central de Regiões</span>
           </Link>
           

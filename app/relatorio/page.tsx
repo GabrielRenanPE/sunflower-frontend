@@ -44,9 +44,9 @@ export default function RelatorioTecnico() {
       {/* Botão de Imprimir */}
       <button 
         onClick={handlePrint}
-        className="print:hidden fixed top-6 right-6 bg-[#1a1a18] hover:bg-black text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-xl transition-all font-black uppercase tracking-widest text-xs z-50"
+        className="group print:hidden fixed top-6 right-6 bg-sun-text hover:bg-black text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/20 hover:ring-2 hover:ring-offset-2 hover:ring-sun-text/60 active:scale-95 active:translate-y-0 font-black uppercase tracking-widest text-xs z-50"
       >
-        <Printer size={18} />
+        <Printer size={18} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:text-sun-amber-400" />
         Salvar como PDF
       </button>
 
